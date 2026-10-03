@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+# Keep dist/ in the repository: it is the installable userscript.
+!dist/
+!dist/*.user.js

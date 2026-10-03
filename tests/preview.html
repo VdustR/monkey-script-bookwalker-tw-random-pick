@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>書櫃隨機閱讀 · 測試預覽</title>
+<style>
+  body { margin: 0; background: #f7f7f7; color: #333; font: 14px/1.5 Arial, "Microsoft JhengHei", sans-serif; }
+  main { margin: 40px auto; padding: 24px; max-width: 900px; background: white; }
+  h1 { font-size: 22px; color: #80563d; }
+  .readerSettingColumn { display: flex; }
+  .readerSetBtn { box-sizing: border-box; width: 44px; height: 44px; border: 1px solid #ddd; }
+  .readerTitle { font-size: 18px; margin: 20px 0; }
+  #fixture { display: flex; gap: 16px; }
+  .readerBooks { width: 110px; }
+  .readerBooks img { width: 110px; }
+  .readerBookMoreMenu, input[name="products"], .pageNumSelect { display: none; }
+  @media (max-width: 600px) { main { margin: 16px; padding: 16px; } }
+</style>
+<main>
+  <h1>BOOK☆WALKER 書櫃隨機閱讀</h1>
+  <p>測試預覽：書籍、封面及原生操作皆為模擬資料，不會修改帳號。</p>
+  <div class="readerSettingBox"><div class="readerSettingColumn"></div></div>
+  <h2 class="readerTitle">測試書單</h2>
+  <div id="fixture"></div>
+  <select class="pageNumSelect"></select>
+  <p id="native-result" role="status"></p>
+  <p id="copy-result"></p>
+  <p><a href="?mode=empty">空書櫃</a> · <a href="?mode=error">載入失敗</a> · <a href="?mode=long">長書名</a> · <a href="?">正常書櫃</a></p>
+</main>
+<script>
+  const mode = new URL(location.href).searchParams.get('mode');
+  const cover = new URL('./cover.svg', location.href).href;
+  const title = mode === 'long' ? '這是一個較長的測試書名：從閱讀習慣到日常思考，以及不同語言版本的補充資料（第一冊・完整修訂版）' : '閱讀的日常（第一冊）';
+  function card(id, name) {
+    return `<div class="readerBooks"><input name="products" value="${id}"><a href="/browserViewer/${id}/read"><img src="${cover}" alt="模擬封面"></a>
+    <ul class="readerBookMoreMenu"><li data-action="click->bookcase#display_book_info" data-product_name="${name}" data-product_image="${cover}" data-author="測試作者" data-category="實用書" data-vendor="測試出版社" data-publish_at="2026-01-01" data-buy_at="2026-09-01" data-last_read="2026-10-02"></li>
+    <li data-action="click->bookcase#add" data-products="[${id}]">加入書單</li><li data-action="click->bookcase#archive" data-products="[${id}]">封存</li></ul></div>`;
+  }
+  document.querySelector('#fixture').innerHTML = mode === 'empty' ? '' : card('1', title);
+  if (mode !== 'empty') {
+    const page = new URL(location.href); page.searchParams.set('page', '2');
+    const option = document.createElement('option'); option.value = page.href;
+    document.querySelector('.pageNumSelect').append(option);
+  }
+  const realFetch = window.fetch.bind(window);
+  let failedOnce = false;
+  window.fetch = async (url, options) => {
+    if (new URL(url, location.href).searchParams.get('page') === '2') {
+      if (mode === 'error' && !failedOnce) {
+        failedOnce = true;
+        return new Response('', {status: 503});
+      }
+      return new Response('<div class="readerSettingBox"></div>' + card('1', title) + card('2', '理解與思考（第二冊）'));
+    }
+    return realFetch(url, options);
+  };
+  // Deterministic first book for layout comparisons; only the fixture overrides randomness.
+  Math.random = () => 0;
+  Object.defineProperty(navigator, 'clipboard', { value: {
+    writeText: async (text) => { document.querySelector('#copy-result').textContent = text; }
+  }});
+  document.querySelector('main').setAttribute('data-controller', 'bookcase');
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target instanceof Element && target.hasAttribute('data-action')) {
+      document.querySelector('#native-result').textContent = `模擬操作：${target.getAttribute('data-action')}`;
+    }
+  });
+</script>
+<script src="../dist/bookwalker-random-book.user.js" defer></script>
+</html>

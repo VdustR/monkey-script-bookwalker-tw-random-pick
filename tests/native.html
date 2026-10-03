@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>書櫃原生 fetch 回歸驗證</title>
+<style>
+  body { margin: 32px; font: 14px/1.5 Arial, "Microsoft JhengHei", sans-serif; color: #333; }
+  h1 { font-size: 22px; color: #80563d; }
+  .readerSettingColumn { display: flex; }
+  .readerSetBtn { box-sizing: border-box; width: 44px; height: 44px; border: 1px solid #ddd; }
+  .readerBooks { display: inline-block; width: 110px; margin: 16px; }
+  .readerBooks img { width: 110px; }
+  .readerBookMoreMenu, input[name="products"], .pageNumSelect { display: none; }
+</style>
+<h1>書櫃原生 fetch 回歸驗證</h1>
+<p>模擬書櫃，使用未覆寫的瀏覽器原生 fetch；第二本書只會從分頁回應讀取。</p>
+<div class="readerSettingBox"><div class="readerSettingColumn"></div></div>
+<h2 class="readerTitle">原生 fetch 測試書單</h2>
+<div class="readerBooks">
+  <input name="products" value="1">
+  <a href="/browserViewer/1/read"><img src="./cover.svg" alt="模擬封面"></a>
+  <ul class="readerBookMoreMenu"><li data-action="click->bookcase#display_book_info" data-product_name="第一頁測試書籍" data-product_image="./cover.svg" data-author="測試作者"></li></ul>
+</div>
+<div class="readerBooks" id="second-page-book">
+  <input name="products" value="2">
+  <a href="/browserViewer/2/read"><img src="./cover.svg" alt="模擬封面"></a>
+  <ul class="readerBookMoreMenu"><li data-action="click->bookcase#display_book_info" data-product_name="第二頁測試書籍" data-product_image="./cover.svg" data-author="測試作者"></li></ul>
+</div>
+<select class="pageNumSelect"><option value="?page=2">第二頁</option></select>
+<script>
+  if (!new URL(location.href).searchParams.has('page')) document.getElementById('second-page-book').remove();
+</script>
+<script src="../dist/bookwalker-random-book.user.js" defer></script>
+</html>

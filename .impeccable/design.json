@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-03T04:25:17.315135+00:00",
+  "title": "Design System: BOOKWALKER Random Reader",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "dialog",
+        "value": "0 12px 40px #0004",
+        "purpose": "Native dialog elevation above the bookshelf."
+      }
+    ],
+    "motion": [
+      {
+        "name": "dialog-reveal",
+        "value": "reveal 180ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Clip-path inset changes from 0 0 8% 0 to 0 on opening; disabled with reduced motion."
+      },
+      {
+        "name": "control-hover",
+        "value": "background-color 150ms ease-out",
+        "purpose": "Dialog control background transition; disabled with reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "480px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Reading action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Brown reading anchor opens a new tab; the preview omits a book URL.",
+      "html": "<a class=\"ds-reading\" href=\"about:blank\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"開始閱讀（開啟新分頁）\">開始閱讀<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" width=\"20\" height=\"20\"><path d=\"M14 4h6v6M20 4l-9 9M10 4H4v16h16v-6\"/></svg></a>",
+      "css": ".ds-reading { font: 14px/1.5 Arial, \"Microsoft JhengHei\", sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid #b9aaa0; border-radius: 3px; background: #fff; color: #80563d; text-decoration: none; cursor: pointer; transition: background-color 150ms ease-out; background: #80563d; color: #fff; border-color: #80563d; } .ds-reading:hover { background: #68432f; border-color: #68432f; } .ds-reading:focus-visible { outline: 2px solid #80563d; outline-offset: 3px; } .ds-reading:disabled { opacity: .55; cursor: wait; } @media (prefers-reduced-motion: reduce) { .ds-reading { transition: none; } } "
+    },
+    {
+      "name": "Reroll control",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Outlined reroll button remains beside the reading action and is disabled while drawing.",
+      "html": "<button type=\"button\" class=\"ds-reroll\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" width=\"20\" height=\"20\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"3\"/><path d=\"M7.5 7.5h.01M16.5 7.5h.01M12 12h.01M7.5 16.5h.01M16.5 16.5h.01\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>重骰</button>",
+      "css": ".ds-reroll { font: 14px/1.5 Arial, \"Microsoft JhengHei\", sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid #b9aaa0; border-radius: 3px; background: #fff; color: #80563d; text-decoration: none; cursor: pointer; transition: background-color 150ms ease-out;  } .ds-reroll:hover { background: #f5efeb; } .ds-reroll:focus-visible { outline: 2px solid #80563d; outline-offset: 3px; } .ds-reroll:disabled { opacity: .55; cursor: wait; } @media (prefers-reduced-motion: reduce) { .ds-reroll { transition: none; } }  .ds-reroll svg { flex: none; }"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Directly visible underlined action for copying or native bookshelf operations.",
+      "html": "<button type=\"button\" class=\"ds-secondary\">複製書籍資訊</button>",
+      "css": ".ds-secondary { font: 14px/1.5 Arial, \"Microsoft JhengHei\", sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid #b9aaa0; border-radius: 3px; background: #fff; color: #80563d; text-decoration: none; cursor: pointer; transition: background-color 150ms ease-out; padding: 6px 0; min-height: 36px; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 4px; font-size: 13px; } .ds-secondary:hover { background: #f5efeb; color: #4e3020; } .ds-secondary:focus-visible { outline: 2px solid #80563d; outline-offset: 3px; } .ds-secondary:disabled { opacity: .55; cursor: wait; } @media (prefers-reduced-motion: reduce) { .ds-secondary { transition: none; } } @media (max-width: 480px) { .ds-secondary { min-height: 44px; } }"
+    },
+    {
+      "name": "Close control",
+      "kind": "button",
+      "refersTo": "button-close",
+      "description": "Icon button closes the native dialog and supplies an accessible name.",
+      "html": "<button type=\"button\" class=\"ds-close\" aria-label=\"關閉\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" width=\"20\" height=\"20\"><path d=\"m6 6 12 12M18 6 6 18\"/></svg></button>",
+      "css": ".ds-close { font: 14px/1.5 Arial, \"Microsoft JhengHei\", sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid #b9aaa0; border-radius: 3px; background: #fff; color: #80563d; text-decoration: none; cursor: pointer; transition: background-color 150ms ease-out; border: 0; min-width: 40px; padding: 8px; color: #666; background: transparent; } .ds-close:hover { background: #f5efeb; } .ds-close:focus-visible { outline: 2px solid #80563d; outline-offset: 3px; } .ds-close:disabled { opacity: .55; cursor: wait; } @media (prefers-reduced-motion: reduce) { .ds-close { transition: none; } } "
+    }
+  ],
+  "narrative": {
+    "overview": "Extend the existing BOOKWALKER bookshelf rather than introducing a new brand. Use compact controls, white surfaces, brown actions, and the original site's book metadata language. The user's pinned visual direction is the authority.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": [
+      "Do keep the current bookshelf scope visible.",
+      "Do preserve factual titles, authors, dates, and original site-action labels.",
+      "Do keep secondary actions visible without an expansion control."
+    ],
+    "donts": [
+      "Don't add decorative containers or unrelated brand elements."
+    ]
+  }
+}

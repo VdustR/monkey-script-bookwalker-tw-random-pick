@@ -1,0 +1,38 @@
+{
+  "name": "monkey-script-bookwalker-tw-random-pick",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "svelte-check --tsconfig ./tsconfig.json && tsc --noEmit",
+    "test": "vitest run",
+    "build": "npm run check && vite build && node scripts/verify-dist.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "release": "npm test && npm run build"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tsconfig/strictest": "2.0.8",
+    "@types/jsdom": "30.0.0",
+    "@types/node": "26.6.4",
+    "jsdom": "30.1.1",
+    "svelte": "5.57.1",
+    "svelte-check": "4.7.6",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "MIT",
+  "description": "Pick a random readable book across every page of your current BOOKWALKER Taiwan shelf or custom list.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VdustR/monkey-script-bookwalker-tw-random-pick.git"
+  },
+  "homepage": "https://github.com/VdustR/monkey-script-bookwalker-tw-random-pick",
+  "bugs": {
+    "url": "https://github.com/VdustR/monkey-script-bookwalker-tw-random-pick/issues"
+  }
+}
