@@ -13,7 +13,7 @@ export function triggerSiteAction(action: SiteAction, close: () => void): void {
   }
   controller.append(trigger);
   close();
-  // Let the site's controller connect after insertion and the modal release focus.
+  // 等原站控制器連接新增按鈕、對話框釋放焦點後，再觸發操作。
   setTimeout(() => {
     trigger.click();
     setTimeout(() => { trigger.remove(); }, 1_000);

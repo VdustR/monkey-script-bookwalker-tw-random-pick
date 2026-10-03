@@ -61,7 +61,7 @@ export function extractBooks(root: Document, pageUrl: string): Book[] {
 export function pageUrls(root: Document, currentUrl: string): string[] {
   const current = new URL(currentUrl);
   current.hash = '';
-  // Keep the active shelf and filters; only pagination may differ.
+  // 保留目前書櫃與篩選條件，只變更分頁。
   const urls = new Set([current.href]);
   for (const option of root.querySelectorAll<HTMLOptionElement>(pageSelector)) {
     if (!option.value.trim()) continue;
@@ -90,7 +90,7 @@ export class Catalog {
   ) {
     this.root = root;
     this.currentUrl = currentUrl;
-    // Native Window.fetch rejects a Catalog instance as its receiver.
+    // 將原生 fetch 綁定至瀏覽器全域，避免以 Catalog 作為 this 時拋出錯誤。
     this.fetchPage = fetchPage.bind(globalThis);
   }
 
@@ -108,7 +108,7 @@ export class Catalog {
     activeUrl.hash = '';
     const books = new Map<string, Book>();
     let nextPage = 0;
-    // Bound concurrent requests without biasing the final selection by page size.
+    // 限制同時載入的分頁數，合併全部書目後再抽選，避免分頁本數影響機率。
     const worker = async (): Promise<void> => {
       while (nextPage < urls.length) {
         const url = urls[nextPage++];
@@ -131,7 +131,7 @@ export class Catalog {
         for (const book of extractBooks(root, url)) books.set(book.id || book.readerUrl, book);
       }
     };
-    // Wait for every worker to settle before a failed catalog can be retried.
+    // 等所有載入工作結束後才允許重試，避免前後兩次請求重疊。
     const results = await Promise.allSettled(Array.from({ length: Math.min(3, urls.length) }, worker));
     const failed = results.find((result) => result.status === 'rejected');
     if (failed?.status === 'rejected') throw failed.reason;

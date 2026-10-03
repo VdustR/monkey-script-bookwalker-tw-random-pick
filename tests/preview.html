@@ -54,7 +54,7 @@
     }
     return realFetch(url, options);
   };
-  // Deterministic first book for layout comparisons; only the fixture overrides randomness.
+  // 測試頁固定抽第一本書，供版面比較；正式腳本維持隨機抽選。
   Math.random = () => 0;
   Object.defineProperty(navigator, 'clipboard', { value: {
     writeText: async (text) => { document.querySelector('#copy-result').textContent = text; }

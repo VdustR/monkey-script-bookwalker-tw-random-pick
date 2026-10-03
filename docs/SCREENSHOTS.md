@@ -1,17 +1,19 @@
-# Screenshot provenance
+# 截圖製作方式
 
-`images/bookshelf.png` and `images/random-reader.png` were captured in Chrome on the actual BOOK☆WALKER Taiwan bookshelf, on October 3, 2026. The site's markup, layout, typography, icons, and styles were left intact. The built userscript supplies the dice control and dialog.
+`images/bookshelf.png` 與 `images/random-reader.png` 於 2026 年 10 月 3 日，在 Chrome 的真實 BOOK☆WALKER 台灣書櫃拍攝。保留原站的 HTML、版面、字型、圖示與樣式，骰子與選書視窗由建置後的腳本提供。
 
-Only displayed data was replaced: fictional titles, SVG covers, authors, publishers, publication and purchase dates, reader IDs, recent-reading entries, avatar, notification counts, and page data. Shelf requests in that disposable tab returned synthetic HTML. No library mutation was submitted.
+書名、SVG 書封、作者、出版社、出版與購買日期、閱讀連結編號、最近閱讀、頭像、通知計數與分頁資料均已替換。截圖分頁的書櫃請求回傳模擬 HTML，沒有提交帳號書櫃操作。
 
-`scripts/screenshot-stubs.js` is a documentation-only helper for a disposable, signed-in bookshelf tab. Never include it in the production bundle or install it as a userscript. It changes the tab's DOM, overrides shelf fetch and randomness, and is discarded when the tab closes.
+## 重新拍攝
 
-For a future capture:
+`scripts/screenshot-stubs.js` 僅供文件截圖使用。它會修改目前分頁的 DOM、書櫃 fetch 與隨機抽選。請在可關閉的獨立分頁執行，不要納入正式產物或安裝為腳本。
 
-1. Open a disposable tab on the real bookshelf and run the helper using browser developer tooling. Check for other personal data introduced by site changes, such as custom-list names, account menus, or new badges, before saving any image.
-2. Remove an older userscript mount if present and execute the current built distribution so it reads only synthetic data. The cover URL parser accepts HTTP(S), so set the metadata cover to a temporary valid site image URL for rendering, then replace the rendered dialog image's `src` with the corresponding synthetic card's SVG data URL before capture. Do not change application CSS or layout.
-3. Wait until all synthetic images have completed loading. Capture the shelf toolbar and the open dialog with surrounding site context.
-4. Read back the selected title, book count, action labels, and reader link's `_blank` target from the same page state. Inspect every saved image for real covers, account information, and stale rendering before publishing.
-5. Close the disposable tab. Do not click sample reader links or native account-mutation controls.
+1. 在獨立分頁開啟已登入的真實書櫃，用瀏覽器開發工具執行模擬資料腳本。另行檢查自訂書單名稱、帳號選單及新增欄位是否仍含個人資料。
+2. 若頁面已有舊版腳本，移除舊版掛載元素，再執行目前的 `dist`，讓抽選只讀取模擬資料。
+3. 書封網址只接受 HTTP(S)。先將書封中繼資料設為有效的網站圖片網址；視窗顯示後，把圖片的 `src` 換成對應模擬書封的 SVG data URL。保留 CSS 與版面。
+4. 確認圖片載入完成，再擷取工具列與選書視窗。保留周圍網站內容，讓按鈕位置可辨識。
+5. 從同一個畫面確認書名、總本數、操作文字及閱讀連結的 `_blank`。逐張檢查儲存的圖片，確認沒有真實書封、帳號資料或尚未更新的畫面。
 
-These screenshots demonstrate appearance using synthetic data. They do not prove actual account mutations or purchased-book entitlement.
+完成後關閉截圖分頁。不要開啟模擬閱讀連結或執行帳號書櫃操作。
+
+截圖用於展示介面，不代表真實帳號操作或購書權限已驗證。

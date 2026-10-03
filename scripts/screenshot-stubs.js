@@ -1,5 +1,5 @@
-// Run only in a disposable BOOKWALKER bookshelf tab before taking documentation screenshots.
-// This changes displayed data and shelf-fetch responses, never the account's stored library.
+// 僅供文件截圖使用，請在拍攝前於可關閉的獨立書櫃分頁執行。
+// 替換畫面資料與書櫃請求的回應，帳號內的書櫃資料保持原樣。
 (() => {
   const titles = ['星光郵便局', '雨後的圖書館', '山海之間', '週末咖啡筆記', '月光列車', '小島散步日記'];
   const colors = ['#334e68', '#556b58', '#8a6448', '#725a78', '#596875', '#a1764d'];
@@ -28,7 +28,7 @@
     img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="#ddd"/><circle cx="40" cy="28" r="14" fill="#999"/><path d="M14 74a26 26 0 0 1 52 0" fill="#999"/></svg>');
   });
   document.querySelectorAll('.topIconNum').forEach(e => { e.textContent = '0'; });
-  // Return a synthetic second page while preserving the real site's layout and selectors.
+  // 回傳模擬的第二頁，保留原站版面與選擇器。
   const options = document.querySelectorAll('.pageNumSelect option');
   options.forEach((option, index) => { if (index > 1) option.remove(); });
   const second = document.cloneNode(true);
@@ -44,6 +44,6 @@
   window.fetch = (input, init) => new URL(typeof input === 'string' ? input : input instanceof URL ? input.href : input.url, location.href).pathname === location.pathname
     ? Promise.resolve(new Response(shelfHtml, { headers: { 'Content-Type': 'text/html' } }))
     : originalFetch(input, init);
-  // A fixed choice keeps the documentation reproducible. Do not use this in production.
+  // 固定抽選結果，方便重拍相同畫面；正式腳本不可使用。
   Math.random = () => 0;
 })();

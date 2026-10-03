@@ -1,85 +1,90 @@
-# BOOK☆WALKER Taiwan Random Reader
+# BOOK☆WALKER 台灣書櫃隨機選書
 
-Choose your next book from every page of your current BOOK☆WALKER Taiwan shelf category or custom list. Start reading in a new tab, reroll, or use the site's shelf actions from one compact dialog.
+從目前書櫃分類或自訂書單的全部分頁抽一本書。按「開始閱讀」就會開啟新分頁；想換一本，按「重骰」。
 
-## Install
+## 安裝
 
-[**Install the userscript**](https://raw.githubusercontent.com/VdustR/monkey-script-bookwalker-tw-random-pick/refs/heads/main/dist/bookwalker-random-book.user.js)
+1. 安裝瀏覽器擴充功能 [Tampermonkey](https://www.tampermonkey.net/)。
+2. 在 Chrome 開啟「擴充功能 → 管理擴充功能 → Tampermonkey → 詳細資料」，啟用「允許使用者指令碼（Allow User Scripts）」。若找不到此設定，依 [Tampermonkey 官方說明](https://www.tampermonkey.net/faq.php#Q209)操作。
+3. 點選[安裝腳本](https://raw.githubusercontent.com/VdustR/monkey-script-bookwalker-tw-random-pick/refs/heads/main/dist/bookwalker-random-book.user.js)，在 Tampermonkey 畫面按「安裝」。
+4. 登入 [BOOK☆WALKER 台灣](https://www.bookwalker.com.tw/)，開啟「線上書櫃」。已開啟的書櫃需重新整理。
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) for your browser.
-2. In Chrome, open **Extensions → Manage Extensions → Tampermonkey → Details** and enable **Allow User Scripts** when that setting is available. See [Tampermonkey's official instructions](https://www.tampermonkey.net/faq.php#Q209) for your browser version.
-3. Open [`dist/bookwalker-random-book.user.js`](dist/bookwalker-random-book.user.js), then click **Raw**. Tampermonkey should display its installation screen; choose **Install**.
-4. Sign in to [BOOK☆WALKER Taiwan](https://www.bookwalker.com.tw/) and open your **線上書櫃**. Reload the page if it was already open.
-5. Find the dice button beside the shelf toolbar's archive control. Its tooltip is **從目前書櫃隨機選書**.
+書櫃工具列的封存按鈕旁會出現骰子。滑鼠移上去會顯示「從目前書櫃隨機選書」。
 
-If Raw opens as plain text, create a new script in the Tampermonkey dashboard, replace the entire editor contents with the file, and save. Keep only one enabled copy of this script.
+如果安裝連結只顯示文字，請在 Tampermonkey 管理介面新增腳本，把整份檔案貼進編輯器後儲存。保留一份啟用的版本即可。
 
-## Use
+## 使用
 
-1. Open the category or custom list you want to draw from. Keep any desired site filters selected.
-2. Click the dice button. The first draw loads every page in that scope and chooses one readable book.
-3. Choose **開始閱讀** to open the site's reader in a new tab, or **重骰** to draw again.
-4. **複製書籍資訊**, **加入書單**, and **封存** are directly visible below the reading controls. The shelf actions use BOOK☆WALKER's existing dialogs and confirmations.
-5. Close with **關閉** or **Escape**. After changing the library, reload before drawing again to refresh the cached catalog.
+1. 選好書櫃分類、自訂書單及篩選條件。
+2. 按骰子。第一次抽選會載入該範圍的全部分頁。
+3. 按「開始閱讀」開啟新分頁，或按「重骰」換一本。
 
-The draw preserves your current category, custom list, and URL filters. Each deduplicated readable book has the same chance; repeat draws can choose the same book. Books without a reader link are excluded. Up to three pages load concurrently, and a successful catalog is reused until the page reloads.
+「複製書籍資訊」、「加入書單」與「封存」直接顯示在下方。加入書單與封存會交由原站的操作介面處理。
 
-### Examples
+按「關閉」或 `Escape` 可關閉視窗。書櫃內容有變更時，重新整理後再抽。
 
-The following screenshots were captured from the **real BOOK☆WALKER website** on October 3, 2026. The site's HTML layout and CSS are retained. Books, cover artwork, authors, publishers, dates, reader IDs, recent-reading entries, avatar, notification counts, and pagination data are synthetic. They show no actual account library data.
+### 畫面範例
 
-![Real BOOKWALKER shelf with synthetic book covers and the dice toolbar button](docs/images/bookshelf.png)
+截圖使用真實網站的版面與樣式。書籍、書封、作者、日期、最近閱讀、頭像與計數均已換成模擬資料。拍攝日期為 2026 年 10 月 3 日。
 
-The dialog shows the selected book, **開始閱讀**, **重骰**, and the visible secondary actions.
+![真實書櫃版面：骰子位於封存按鈕右側，書封皆為模擬資料](docs/images/bookshelf.png)
 
-![Random-reading dialog on the real website with fictional book metadata and cover artwork](docs/images/random-reader.png)
+![隨機閱讀視窗：書籍資訊、開始閱讀、重骰與其他操作直接顯示](docs/images/random-reader.png)
 
-## Update or remove
+## 抽選範圍
 
-To update, open the current file under `dist/` again and install it over the existing copy. Updates are manual; this initial distribution does not declare automatic update URLs.
+- 保留目前分類、自訂書單與網址中的篩選條件，只切換分頁。
+- 合併全部分頁並去除重複書籍，每本可閱讀的書被抽中的機率相同。
+- 每次獨立抽選，可能連續抽中同一本。沒有閱讀連結的書不會加入抽選。
+- 同時最多載入三個分頁。成功載入後沿用這份書目，直到重新整理。
 
-To disable or remove it, use the Tampermonkey dashboard. Your BOOK☆WALKER library remains managed by the website.
+## 更新與移除
 
-## Troubleshooting
+更新時，重新點選[安裝腳本](https://raw.githubusercontent.com/VdustR/monkey-script-bookwalker-tw-random-pick/refs/heads/main/dist/bookwalker-random-book.user.js)，覆蓋原版本。目前採手動更新。
 
-| Problem | Action |
+停用或移除腳本，請到 Tampermonkey 管理介面操作。
+
+## 遇到問題
+
+| 狀況 | 處理方式 |
 | --- | --- |
-| Dice button missing | Confirm the script is enabled, user scripts are allowed, and the URL starts with `https://www.bookwalker.com.tw/bookcase/available_book_list/`. Reload the shelf. |
-| Empty selection | Check the current category and filters. Only entries with a readable-book link are included. |
-| Page-loading error | Use **重新嘗試**. If your login or shelf changed, reload and sign in again. A failing page does not produce a partial draw. |
-| Duplicate controls | Disable the older copy in Tampermonkey, then reload. |
-| `Illegal invocation` | Replace an older build with the current `dist` file. Native fetch is bound to the browser global in this version. |
-| Library changes missing | Reload to clear the catalog cached for that page. |
+| 找不到骰子 | 確認腳本已啟用、瀏覽器允許使用者指令碼，且網址以 `https://www.bookwalker.com.tw/bookcase/available_book_list/` 開頭，再重新整理。 |
+| 沒有可抽的書 | 檢查分類與篩選條件；抽選只納入有閱讀連結的書。 |
+| 分頁載入失敗 | 按「重新嘗試」。若登入或書櫃狀態有變，重新整理並確認登入。任一分頁失敗時會停止抽選。 |
+| 出現重複按鈕 | 在 Tampermonkey 停用舊版，再重新整理。 |
+| 出現 `Illegal invocation` | 安裝目前的 `dist` 版本；已修正原生 `fetch` 的呼叫綁定。 |
+| 沒抽到新增的書 | 重新整理，讓腳本重新載入書目。 |
 
-The website's DOM and bookcase controller are integration dependencies. Chrome rendering, catalog behavior, and simulated action forwarding have been checked. Live account mutations through **加入書單** and **封存** have not been exercised.
+已驗證 Chrome 畫面、書目載入與模擬操作轉送。「加入書單」與「封存」尚未在真實帳號執行驗證；這兩項操作依賴原站的書櫃控制器。
 
-## Privacy and permissions
+## 隱私與權限
 
-The script uses `@grant none` and runs only on matching BOOK☆WALKER Taiwan bookshelf pages. It fetches additional pages from the same website using your existing session. It adds no analytics, external catalog service, or library upload. Copying writes to the clipboard only when you click the copy control.
+腳本使用 `@grant none`，只在符合條件的 BOOK☆WALKER 台灣書櫃頁面執行。分頁請求沿用原站的登入狀態，沒有分析追蹤或書目上傳。按下「複製書籍資訊」時才會寫入剪貼簿。
 
-## Development
+## 開發
 
-Use Node.js **22.12 or newer** and npm. CI uses Node.js 24.
+需要 Node.js 22.12 以上與 npm；CI 使用 Node.js 24。
 
 ```sh
 npm ci
-npm run check
-npm test
-npm run build
+npm run release
 ```
 
-The project uses Svelte 5, TypeScript 6, Vite, and `@tsconfig/strictest`, with exact versions in the lockfile. TypeScript 6 is the selected compatible version because the current `svelte-check` peer range excludes TypeScript 7. Library type checking remains enabled.
+`npm run release` 會依序測試、檢查型別、建置並驗證腳本。產物位於 `dist/bookwalker-random-book.user.js`。
 
-| Command | Purpose |
+| 指令 | 用途 |
 | --- | --- |
-| `npm run check` | Check Svelte and strict TypeScript types. |
-| `npm test` | Test extraction, pagination, scope preservation, deduplication, retries, and native-fetch receiver binding. |
-| `npm run build` | Type-check, build one userscript with embedded CSS, and verify metadata, version, permissions, and syntax. |
-| `npm run release` | Run tests and the complete build before committing the distribution. |
-| `npm run dev` | Serve local synthetic preview fixtures. |
+| `npm run check` | 檢查 Svelte 與 TypeScript 型別。 |
+| `npm test` | 執行書目擷取、跨頁、去重、重試與原生 fetch 綁定測試。 |
+| `npm run build` | 檢查型別、打包腳本與 CSS，驗證中繼資料、版本、權限與語法。 |
+| `npm run dev` | 啟動本機測試頁面。 |
 
-Source lives in `src/`; the installable artifact is `dist/bookwalker-random-book.user.js`. `tests/preview.html` uses mocked data and actions; `tests/native.html` keeps browser fetch native. See [the release process](docs/RELEASING.md) and [screenshot provenance](docs/SCREENSHOTS.md).
+使用 Svelte 5、TypeScript 6、Vite 與 `@tsconfig/strictest`，確切版本記錄於鎖定檔。TypeScript 6 是目前與 `svelte-check` 相容的選擇，套件型別檢查保持啟用。
 
-## License
+原始碼位於 `src/`。`tests/preview.html` 使用模擬資料與操作；`tests/native.html` 保留瀏覽器原生 fetch。
 
-[MIT](LICENSE) covers this project's code and authored synthetic assets. BOOK☆WALKER's name, logo, and website interface belong to their respective owners. This is an independent userscript.
+發布時將原始碼與建置後的 `dist` 一起提交至 repository，不建立 GitHub Release。詳見[建置與發布流程](docs/RELEASING.md)及[截圖製作方式](docs/SCREENSHOTS.md)。
+
+## 授權
+
+本專案程式碼與自製模擬素材採 [MIT](LICENSE) 授權。BOOK☆WALKER 的名稱、標誌與網站介面屬於各自權利人。本腳本為獨立專案。
