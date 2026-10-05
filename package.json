@@ -8,7 +8,8 @@
     "test": "vitest run",
     "build": "npm run check && vite build && node scripts/verify-dist.mjs",
     "dev": "vite --host 127.0.0.1",
-    "release": "npm test && npm run build"
+    "release": "npm test && npm run build",
+    "verify:screenshots": "node scripts/verify-screenshots.mjs"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "7.3.1",
