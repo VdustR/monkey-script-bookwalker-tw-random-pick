@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOOK☆WALKER 書櫃隨機閱讀
 // @namespace    https://www.bookwalker.com.tw/
-// @version      0.0.1
+// @version      0.0.2
 // @description  從目前書櫃分類或自訂書單的全部分頁隨機選書，在新分頁閱讀。
 // @homepageURL  https://github.com/VdustR/monkey-script-bookwalker-tw-random-pick
 // @match        https://www.bookwalker.com.tw/bookcase/available_book_list
