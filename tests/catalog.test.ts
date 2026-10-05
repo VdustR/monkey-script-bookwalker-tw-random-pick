@@ -12,6 +12,20 @@ function card(id: string, title = 'Test Book'): string {
 const toolbar = '<div class="readerSettingBox"></div>';
 
 describe('shelf scope and extraction', () => {
+  it('loads /all pagination from the default shelf while retaining filters', () => {
+    const url = 'https://www.bookwalker.com.tw/bookcase/available_book_list?sort=4';
+    const root = parse(`<select class="pageNumSelect">
+      <option value="/bookcase/available_book_list/all?&page=1">1</option>
+      <option value="/bookcase/available_book_list/all?&page=2">2</option>
+      <option value="/bookcase/available_book_list/buy?page=3">other category</option>
+    </select>`);
+    expect(pageUrls(root, url)).toEqual([
+      'https://www.bookwalker.com.tw/bookcase/available_book_list/all?sort=4',
+      'https://www.bookwalker.com.tw/bookcase/available_book_list/all?sort=4&page=2',
+    ]);
+    expect(pageUrls(root, url.replace('list?', 'list/?'))).toEqual(pageUrls(root, url));
+  });
+
   it('changes only page while preserving custom list and active filters', () => {
     const root = parse(`<select class="pageNumSelect">
       <option value="${base}&page=2">2</option><option value="${base}&page=2">2</option>
@@ -35,6 +49,17 @@ describe('shelf scope and extraction', () => {
 });
 
 describe('cross-page catalog', () => {
+  it('uses the current default-shelf document and fetches subsequent /all pages', async () => {
+    const root = parse(toolbar + card('1') + `<select class="pageNumSelect">
+      <option value="/bookcase/available_book_list/all?page=1">1</option>
+      <option value="/bookcase/available_book_list/all?page=2">2</option>
+    </select>`);
+    const fetchPage = vi.fn<typeof fetch>(async () => new Response(toolbar + card('2')));
+    await expect(new Catalog(root, 'https://www.bookwalker.com.tw/bookcase/available_book_list', fetchPage).get()).resolves.toHaveLength(2);
+    expect(fetchPage).toHaveBeenCalledTimes(1);
+    expect(fetchPage.mock.calls[0]?.[0]).toBe('https://www.bookwalker.com.tw/bookcase/available_book_list/all?page=2');
+  });
+
   it('calls the default fetch with the browser global as its receiver', async () => {
     const root = parse(toolbar + card('1') + `<select class="pageNumSelect"><option value="${base}&page=2">2</option></select>`);
     const nativeLikeFetch = vi.fn<typeof fetch>(async function (this: unknown) {

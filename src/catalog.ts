@@ -58,8 +58,17 @@ export function extractBooks(root: Document, pageUrl: string): Book[] {
   });
 }
 
+function shelfUrl(value: string): URL {
+  const url = new URL(value);
+  // 預設書櫃與 /all 顯示相同分類；分頁連結使用 /all，統一後才能載入全部分頁。
+  if (/^\/bookcase\/available_book_list\/?$/.test(url.pathname)) {
+    url.pathname = '/bookcase/available_book_list/all';
+  }
+  return url;
+}
+
 export function pageUrls(root: Document, currentUrl: string): string[] {
-  const current = new URL(currentUrl);
+  const current = shelfUrl(currentUrl);
   current.hash = '';
   // 保留目前書櫃與篩選條件，只變更分頁。
   const urls = new Set([current.href]);
@@ -89,7 +98,7 @@ export class Catalog {
     fetchPage: typeof fetch = fetch,
   ) {
     this.root = root;
-    this.currentUrl = currentUrl;
+    this.currentUrl = shelfUrl(currentUrl).href;
     // 將原生 fetch 綁定至瀏覽器全域，避免以 Catalog 作為 this 時拋出錯誤。
     this.fetchPage = fetchPage.bind(globalThis);
   }
