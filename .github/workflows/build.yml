@@ -19,5 +19,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run release
+      - run: npm run verify:screenshots
       - name: Verify committed distribution
         run: git diff --exit-code -- dist/

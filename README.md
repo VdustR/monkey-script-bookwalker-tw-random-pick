@@ -25,11 +25,11 @@
 
 ### 畫面範例
 
-截圖使用真實網站的版面與樣式。書籍、書封、作者、日期、最近閱讀、頭像與計數均已換成模擬資料。拍攝日期為 2026 年 10 月 3 日。
+截圖使用真實網站的版面與樣式。書籍、書封、作者、日期、最近閱讀、頭像與計數均已換成模擬資料。拍攝日期為 2026 年 10 月 5 日。點選圖片可檢視原始解析度。
 
-![真實書櫃版面：骰子位於封存按鈕右側，書封皆為模擬資料](docs/images/bookshelf.png)
+<a href="docs/images/bookshelf.png"><img src="docs/images/bookshelf.png" width="850" alt="真實書櫃版面：骰子位於封存按鈕右側，書封皆為模擬資料"></a>
 
-![隨機閱讀視窗：書籍資訊、開始閱讀、重骰與其他操作直接顯示](docs/images/random-reader.png)
+<a href="docs/images/random-reader.png"><img src="docs/images/random-reader.png" width="664" alt="隨機閱讀視窗：書籍資訊、開始閱讀、重骰與其他操作直接顯示"></a>
 
 ## 抽選範圍
 
