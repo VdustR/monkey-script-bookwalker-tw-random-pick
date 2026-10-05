@@ -26,7 +26,7 @@ Choose a readable book from all pages of the current shelf category or custom li
 - Draw independently and uniformly from deduplicated books; no shuffle bag.
 - Keep metadata, copying, and native shelf actions directly accessible.
 - Handle empty shelves and loading failures explicitly.
-- Keep the initial version at 0.0.1.
+- The initial version was 0.0.1. Patch releases update the package and userscript versions together.
 - Release by building and committing dist alongside the source in the repository. Do not create GitHub Releases.
 
 ## Brand Commitments
