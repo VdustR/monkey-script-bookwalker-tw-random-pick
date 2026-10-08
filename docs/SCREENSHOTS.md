@@ -1,6 +1,6 @@
 # 截圖製作方式
 
-兩張範例於 2026 年 10 月 5 日，在 Chrome 的真實 BOOK☆WALKER 台灣書櫃重新拍攝。保留原站的 HTML、版面、字型、圖示與 CSS，骰子與選書視窗由 0.0.2 的建置產物提供。
+兩張範例於 2026 年 10 月 8 日，在 Chrome 的真實 BOOK☆WALKER 台灣書櫃重新拍攝。保留原站的 HTML、版面、字型、圖示與 CSS，骰子與選書視窗由 0.0.3 的建置產物提供。
 
 書籍、SVG 書封、作者、出版社、日期、閱讀連結編號、最近閱讀、頭像與計數均為模擬資料。首頁 12 本、第二頁 6 本，共 18 本。沒有提交帳號書櫃操作。
 
@@ -22,7 +22,7 @@
 ## 重新拍攝
 
 1. 在可關閉的獨立分頁開啟已登入的真實書櫃，執行 `scripts/screenshot-stubs.js`。檢查自訂書單、帳號選單與新欄位是否還有個人資料。
-2. 移除舊版掛載元素，再執行目前的 `dist`，讓抽選讀取模擬資料。腳本的書封網址只接受 HTTP(S)；選書視窗顯示後，將圖片 `src` 換成對應模擬書封的 SVG data URL。
+2. 移除舊版掛載元素與注入的樣式，再執行目前的 `dist`，讓抽選讀取模擬資料。腳本的書封網址只接受 HTTP(S)；選書視窗顯示後，將圖片 `src` 換成對應模擬書封的 SVG data URL。
 3. 等待 `document.fonts.ready`、圖片 `decode()` 與對話框動畫完成。保留原始版面、瀏覽器 100% 縮放及 `devicePixelRatio = 2`。
 4. 用支援的 CDP 介面呼叫 `Page.captureScreenshot`，指定 `format: 'png'`、`fromSurface: true` 與功能區域的 `clip`。本次 `clip.scale = 1`，Retina 輸出仍保留 2 倍實際像素。不要將觀察工具的預覽圖直接當成發布原圖，也不要放大舊 JPEG 補像素。
 5. 儲存後驗證檔案標頭與尺寸，更新 `capture.json`，並執行：
@@ -36,3 +36,9 @@
 最後逐張檢視原始像素與 README 的顯示尺寸，確認文字、書封與操作按鈕清楚，且沒有真實帳號資料。文字確認需來自同一個拍攝狀態：書名、總本數、操作文字及閱讀連結的 `_blank`。
 
 完成後關閉截圖分頁。模擬腳本只供文件製作用途，不納入正式產物；不要點擊模擬閱讀連結或帳號書櫃操作。截圖不代表真實帳號操作或購書權限已驗證。
+
+## Toolbar corner verification
+
+The live site applies `:first-child` and `:last-child` corner rules to every descendant `.readerSetBtn`. The nested dice button incorrectly matched the first-child rule. Version 0.0.3 explicitly uses square corners in the middle and restores outer corners only when its mount is the first or last toolbar child.
+
+Chrome computed-style checks passed for the middle, first, and last positions, plus the middle position at a 390px viewport. The regenerated screenshots retain the live website CSS and use synthetic data. These checks exercise the built script injected into an isolated live-site tab; they do not establish that the installed Tampermonkey copy has been updated.

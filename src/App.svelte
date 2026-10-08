@@ -128,6 +128,10 @@
 
 <style>
   :global(.bw-random-mount) { display: contents; }
+  /* The site's first/last-child rules see the nested button as a toolbar edge. */
+  #bookwalker-random-book-button { border-radius: 0; }
+  :global(.bw-random-mount:first-child) #bookwalker-random-book-button { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+  :global(.bw-random-mount:last-child) #bookwalker-random-book-button { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
   .toolbar { display: inline-flex; align-items: center; justify-content: center; padding: 0; font: inherit; color: inherit; background: #fff; cursor: pointer; }
   svg { width: 20px; height: 20px; flex: none; }
   dialog { --accent: #80563d; --ink: #333; --muted: #666; --line: #e6dfda; border: 0; border-radius: 6px; padding: 20px 24px 16px; width: min(600px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); box-sizing: border-box; overflow: auto; background: #fff; color: var(--ink); font: 14px/1.5 Arial, "Microsoft JhengHei", sans-serif; box-shadow: 0 12px 40px #0004; scrollbar-color: #b6a79e #faf8f6; }
